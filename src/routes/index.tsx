@@ -16,7 +16,7 @@ export const Route = createFileRoute("/")({
 type Section = {
   title: string;
   sub: string;
-  screens: { label: string; node: React.ReactNode }[];
+  screens: { label: string; node: ReactNode }[];
 };
 
 const sections: Section[] = [

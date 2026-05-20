@@ -15,19 +15,24 @@ export function PhoneFrame({
 }) {
   return (
     <div className="flex flex-col items-center gap-4 w-[278px]">
-      <div className="phone group">
-        <div className="phone-screen">
-          <div className="phone-status bg-transparent text-current/80">
-            <span>9:41</span>
-            <span className="flex items-center gap-1">
-              <span className="text-[9px] font-semibold tracking-tight">5G</span>
-              <span className="inline-block h-2 w-2 rounded-full bg-current opacity-70" />
-              <span className="inline-block h-2.5 w-4 rounded-[3px] border border-current/70 relative">
-                <span className="absolute inset-[1px] right-[3px] bg-current rounded-[1px]" />
+      <div className="phone-stage">
+        <div className="phone group">
+          <span className="phone-camera" />
+          <span className="phone-power" />
+          <div className="phone-screen">
+            <div className="phone-status bg-transparent text-current/80">
+              <span>9:41</span>
+              <span className="flex items-center gap-1">
+                <span className="text-[9px] font-semibold tracking-tight">5G</span>
+                <span className="inline-block h-2 w-2 rounded-full bg-current opacity-70" />
+                <span className="inline-block h-2.5 w-4 rounded-[3px] border border-current/70 relative">
+                  <span className="absolute inset-[1px] right-[3px] bg-current rounded-[1px]" />
+                </span>
               </span>
-            </span>
+            </div>
+            <div className="flex-1 overflow-hidden">{children}</div>
           </div>
-          <div className="flex-1 overflow-hidden">{children}</div>
+          <span className="phone-glare" />
         </div>
       </div>
       {label && (

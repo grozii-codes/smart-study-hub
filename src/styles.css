@@ -95,45 +95,107 @@
   h1,h2,h3,h4 { font-family: var(--font-display); letter-spacing: -0.02em; }
 }
 
-/* ---------- Phone frame ---------- */
+/* ---------- 3D Phone frame ---------- */
+.phone-stage {
+  perspective: 1800px;
+  perspective-origin: 50% 30%;
+  padding: 24px 0 40px;
+  position: relative;
+}
+.phone-stage::before {
+  /* floor reflection / glow */
+  content: "";
+  position: absolute;
+  left: 50%; bottom: 0;
+  width: 220px; height: 40px;
+  transform: translateX(-50%);
+  background: radial-gradient(ellipse at center, oklch(0.86 0.18 95 / 0.35), transparent 70%);
+  filter: blur(14px);
+  pointer-events: none;
+}
 .phone {
   width: 278px;
   height: 580px;
-  border-radius: 44px;
-  background: linear-gradient(155deg, #2a2f45 0%, #0b0f1a 40%, #1a2138 100%);
+  border-radius: 46px;
+  background:
+    linear-gradient(135deg, #3a4060 0%, #0b0f1a 45%, #1a2138 100%);
   padding: 11px;
   box-shadow:
-    0 40px 80px -25px rgba(0,0,0,0.85),
-    0 0 0 1.5px rgba(255,255,255,0.08) inset,
+    0 50px 90px -30px rgba(0,0,0,0.9),
+    0 30px 50px -20px oklch(0.55 0.22 290 / 0.35),
+    0 0 0 1.5px rgba(255,255,255,0.1) inset,
     0 0 0 2px rgba(0,0,0,0.8),
     0 0 0 9px #1a1f2e,
-    0 0 0 10px rgba(255,255,255,0.04);
+    0 0 0 10px rgba(255,255,255,0.06);
   position: relative;
   flex-shrink: 0;
+  transform-style: preserve-3d;
+  transform: rotateY(-14deg) rotateX(6deg) rotateZ(-1deg);
+  transition: transform 0.7s cubic-bezier(.22,.61,.36,1), box-shadow 0.7s;
+}
+.phone:hover {
+  transform: rotateY(0deg) rotateX(0deg) rotateZ(0deg) translateY(-8px) scale(1.02);
+  box-shadow:
+    0 70px 110px -30px rgba(0,0,0,0.95),
+    0 40px 70px -20px oklch(0.86 0.18 95 / 0.45),
+    0 0 0 1.5px rgba(255,255,255,0.12) inset,
+    0 0 0 2px rgba(0,0,0,0.8),
+    0 0 0 9px #1a1f2e,
+    0 0 0 10px rgba(255,255,255,0.08);
+}
+/* glass glare */
+.phone > .phone-glare {
+  position: absolute;
+  inset: 11px;
+  border-radius: 34px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.18) 0%, transparent 35%, transparent 70%, rgba(255,255,255,0.06) 100%);
+  pointer-events: none;
+  z-index: 25;
+  mix-blend-mode: overlay;
 }
 .phone::before {
   content: "";
   position: absolute;
   top: 16px; left: 50%;
   transform: translateX(-50%);
-  width: 96px; height: 24px;
-  background: #000;
+  width: 96px; height: 26px;
+  background: radial-gradient(ellipse at 30% 50%, #0a0a0a 60%, #1a1a1a 100%);
   border-radius: 99px;
   z-index: 20;
-  box-shadow: 0 0 0 1px rgba(255,255,255,0.04);
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.05), inset 0 1px 2px rgba(255,255,255,0.08);
+}
+/* camera dot inside notch */
+.phone > .phone-camera {
+  position: absolute;
+  top: 22px; left: calc(50% + 28px);
+  width: 8px; height: 8px;
+  background: radial-gradient(circle at 30% 30%, #3a4a6a 0%, #050810 70%);
+  border-radius: 50%;
+  z-index: 21;
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.05), inset 0 0 2px rgba(120,180,255,0.4);
 }
 .phone::after {
   content: "";
   position: absolute;
-  left: -2px; top: 110px;
-  width: 3px; height: 40px;
-  background: linear-gradient(90deg, #0a0a0a, #2a2f45);
+  left: -2.5px; top: 110px;
+  width: 3px; height: 38px;
+  background: linear-gradient(90deg, #050810, #2a2f45);
   border-radius: 2px 0 0 2px;
-  box-shadow: 0 60px 0 #2a2f45, 0 110px 0 #2a2f45;
+  box-shadow:
+    0 56px 0 -1px #1a1f2e, 0 56px 0 #2a2f45,
+    0 116px 0 -1px #1a1f2e, 0 116px 0 #2a2f45;
+}
+/* right power button */
+.phone > .phone-power {
+  position: absolute;
+  right: -2.5px; top: 150px;
+  width: 3px; height: 60px;
+  background: linear-gradient(270deg, #050810, #2a2f45);
+  border-radius: 0 2px 2px 0;
 }
 .phone-screen {
   width: 100%; height: 100%;
-  border-radius: 28px;
+  border-radius: 34px;
   overflow: hidden;
   background: #fafafa;
   color: var(--color-ink);
@@ -143,11 +205,12 @@
   display: flex; flex-direction: column;
 }
 .phone-status {
-  height: 28px;
-  padding: 0 18px;
+  height: 30px;
+  padding: 0 22px;
   display: flex; align-items: flex-end; justify-content: space-between;
-  font-size: 10px; font-weight: 600;
-  padding-bottom: 4px;
+  font-size: 10px; font-weight: 700;
+  padding-bottom: 5px;
+  letter-spacing: -0.02em;
 }
 
 /* gradient bg helpers for screens */
@@ -158,3 +221,9 @@
 /* Scrollbar */
 ::-webkit-scrollbar { width: 8px; height: 8px; }
 ::-webkit-scrollbar-thumb { background: var(--surface-2); border-radius: 99px; }
+
+/* Subtle entrance */
+@keyframes phoneRise {
+  from { opacity: 0; transform: translateY(40px) rotateY(-25deg); }
+  to { opacity: 1; transform: translateY(0) rotateY(-14deg); }
+}
